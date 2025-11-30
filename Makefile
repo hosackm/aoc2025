@@ -28,7 +28,7 @@ watch:
 		fi' sh {}
 
 test:
-	@go test ./...
+	@go test -v ./internal/...
 
 clean:
 	@echo "Cleaning build directory"

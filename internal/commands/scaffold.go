@@ -23,18 +23,13 @@ import "testing"
 func TestDay{{ printf "%02d" .Day }}(t *testing.T) {}
 `
 
-func HandleScaffold(day int, filename string) error {
+func HandleScaffold(day int) error {
 	if day < 1 || day > 25 {
 		return fmt.Errorf("day must be between 1 through 25")
 	}
 
 	dayStr := fmt.Sprintf("day%02d", day)
 	dir := filepath.Join("internal", "days", dayStr)
-	filenames := []string{
-		filepath.Join(dir, dayStr+".go"),
-		filepath.Join(dir, dayStr+"_test.go"),
-	}
-
 	if _, err := os.Stat(dir); errors.Is(err, os.ErrNotExist) {
 		err = os.Mkdir(dir, 0o777)
 		if err != nil {
@@ -42,6 +37,10 @@ func HandleScaffold(day int, filename string) error {
 		}
 	}
 
+	filenames := []string{
+		filepath.Join(dir, dayStr+".go"),
+		filepath.Join(dir, dayStr+"_test.go"),
+	}
 	for _, f := range filenames {
 		_, err := os.Stat(f)
 		if err == nil || errors.Is(err, os.ErrExist) {
@@ -49,7 +48,7 @@ func HandleScaffold(day int, filename string) error {
 		}
 	}
 
-	templates := make([]*template.Template, len(filenames))
+	templates := make([]*template.Template, 2)
 	for i, tmpl := range []string{sourceTmpl, testTmpl} {
 		t, err := template.New("").Parse(tmpl)
 		if err != nil {
@@ -62,6 +61,7 @@ func HandleScaffold(day int, filename string) error {
 		if err != nil {
 			return err
 		}
+		defer f.Close()
 
 		err = t.Execute(f, struct{ Day int }{day})
 		if err != nil {
@@ -69,5 +69,7 @@ func HandleScaffold(day int, filename string) error {
 		}
 	}
 
-	return nil
+	txtFilename := filepath.Join("internal", "days", "inputs", fmt.Sprintf("%02d.txt", day))
+	_, err := os.OpenFile(txtFilename, os.O_CREATE, 0o777)
+	return err
 }

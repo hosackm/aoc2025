@@ -31,7 +31,7 @@ func Run() error {
 	case "run <day>":
 		return commands.HandleRun(CLI.Run.Day)
 	case "scaffold <day>":
-		err := commands.HandleScaffold(CLI.Scaffold.Day, "somefile.txt")
+		err := commands.HandleScaffold(CLI.Scaffold.Day)
 		if err != nil {
 			return err
 		}

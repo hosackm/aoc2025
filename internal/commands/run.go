@@ -2,9 +2,9 @@ package commands
 
 import (
 	"fmt"
-	"os"
 
 	"github.com/hosackm/aoc/internal/days/day01"
+	"github.com/hosackm/aoc/internal/days/inputs"
 	"github.com/hosackm/aoc/internal/runner"
 )
 
@@ -14,24 +14,29 @@ func HandleRun(day int) error {
 	}
 
 	r := runner.NewDayRunner()
-	r.Register(1, day01.Day01{})
+	dayImplementations := []runner.Day{
+		day01.Day01{},
+	}
+
+	for _, d := range dayImplementations {
+		if err := r.Register(1, d); err != nil {
+			return err
+		}
+	}
 
 	d, ok := r.Get(day)
 	if !ok {
 		return fmt.Errorf("day %d doesn't exist yet", day)
 	}
 
-	inputFilename := fmt.Sprintf("inputs/%02d_input.txt", day)
-	b, err := os.ReadFile(inputFilename)
+	b, err := inputs.FS.ReadFile(fmt.Sprintf("%02d.txt", day))
 	if err != nil {
 		return err
 	}
 
-	input := string(b)
-
 	type PartFunc func(string) (string, error)
 	for name, f := range map[string]PartFunc{"part 1": d.Part1, "part 2": d.Part2} {
-		output, err := f(input)
+		output, err := f(string(b))
 		if err != nil {
 			return err
 		}
