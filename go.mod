@@ -1,4 +1,4 @@
-module github.com/hosackm/aoc
+module github.com/hosackm/aoc2025
 
 go 1.25.4
 

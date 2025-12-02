@@ -5,7 +5,7 @@ import (
 	"os"
 
 	"github.com/alecthomas/kong"
-	"github.com/hosackm/aoc/internal/commands"
+	"github.com/hosackm/aoc2025/internal/commands"
 )
 
 var CLI struct {

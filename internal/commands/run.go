@@ -3,9 +3,9 @@ package commands
 import (
 	"fmt"
 
-	"github.com/hosackm/aoc/internal/days/day01"
-	"github.com/hosackm/aoc/internal/days/inputs"
-	"github.com/hosackm/aoc/internal/runner"
+	"github.com/hosackm/aoc2025/internal/days/day01"
+	"github.com/hosackm/aoc2025/internal/days/inputs"
+	"github.com/hosackm/aoc2025/internal/runner"
 )
 
 func HandleRun(day int) error {
@@ -14,12 +14,12 @@ func HandleRun(day int) error {
 	}
 
 	r := runner.NewDayRunner()
-	dayImplementations := []runner.Day{
-		day01.Day01{},
+	dayImplementations := map[int]runner.Day{
+		1: day01.Day01{},
 	}
 
-	for _, d := range dayImplementations {
-		if err := r.Register(1, d); err != nil {
+	for num, day := range dayImplementations {
+		if err := r.Register(num, day); err != nil {
 			return err
 		}
 	}
