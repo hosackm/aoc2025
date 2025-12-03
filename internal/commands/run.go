@@ -6,6 +6,7 @@ import (
 
 	"github.com/hosackm/aoc2025/internal/days/day01"
 	"github.com/hosackm/aoc2025/internal/days/day02"
+	"github.com/hosackm/aoc2025/internal/days/day03"
 	"github.com/hosackm/aoc2025/internal/days/inputs"
 	"github.com/hosackm/aoc2025/internal/runner"
 )
@@ -19,6 +20,7 @@ func HandleRun(day int) error {
 	dayImplementations := map[int]runner.Day{
 		1: day01.Day01{},
 		2: day02.Day02{},
+		3: day03.Day03{},
 	}
 
 	for num, day := range dayImplementations {
@@ -40,12 +42,12 @@ func HandleRun(day int) error {
 	input := strings.Trim(string(b), "\n")
 
 	type PartFunc func(string) (string, error)
-	for name, f := range map[string]PartFunc{"part 1": d.Part1, "part 2": d.Part2} {
+	for i, f := range []PartFunc{d.Part1, d.Part2} {
 		output, err := f(input)
 		if err != nil {
 			return err
 		}
-		fmt.Printf("[%s]: %s\n", name, output)
+		fmt.Printf("[part %d]: %s\n", i+1, output)
 	}
 
 	return nil
