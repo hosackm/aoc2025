@@ -2,13 +2,18 @@ package commands
 
 import (
 	"fmt"
+	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/hosackm/aoc2025/internal/days/day01"
 	"github.com/hosackm/aoc2025/internal/days/day02"
 	"github.com/hosackm/aoc2025/internal/days/day03"
-	"github.com/hosackm/aoc2025/internal/days/inputs"
 	"github.com/hosackm/aoc2025/internal/runner"
+)
+
+const (
+	InputDirectory = "inputs"
 )
 
 func HandleRun(day int) error {
@@ -34,7 +39,8 @@ func HandleRun(day int) error {
 		return fmt.Errorf("day %d doesn't exist yet", day)
 	}
 
-	b, err := inputs.FS.ReadFile(fmt.Sprintf("%02d.txt", day))
+	inputPath := filepath.Join(InputDirectory, fmt.Sprintf("%02d.txt", day))
+	b, err := os.ReadFile(inputPath)
 	if err != nil {
 		return err
 	}
