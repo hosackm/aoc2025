@@ -2,8 +2,10 @@ package commands
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/hosackm/aoc2025/internal/days/day01"
+	"github.com/hosackm/aoc2025/internal/days/day02"
 	"github.com/hosackm/aoc2025/internal/days/inputs"
 	"github.com/hosackm/aoc2025/internal/runner"
 )
@@ -16,6 +18,7 @@ func HandleRun(day int) error {
 	r := runner.NewDayRunner()
 	dayImplementations := map[int]runner.Day{
 		1: day01.Day01{},
+		2: day02.Day02{},
 	}
 
 	for num, day := range dayImplementations {
@@ -34,9 +37,11 @@ func HandleRun(day int) error {
 		return err
 	}
 
+	input := strings.Trim(string(b), "\n")
+
 	type PartFunc func(string) (string, error)
 	for name, f := range map[string]PartFunc{"part 1": d.Part1, "part 2": d.Part2} {
-		output, err := f(string(b))
+		output, err := f(input)
 		if err != nil {
 			return err
 		}
