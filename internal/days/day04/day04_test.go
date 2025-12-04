@@ -94,3 +94,27 @@ func TestPartOne(t *testing.T) {
 		t.Errorf("got %s want %s", got, want)
 	}
 }
+
+func TestPartTwo(t *testing.T) {
+	input := `..@@.@@@@.
+@@@.@.@.@@
+@@@@@.@.@@
+@.@@@@..@.
+@@.@@@@.@@
+.@@@@@@@.@
+.@.@.@.@@@
+@.@@@.@@@@
+.@@@@@@@@.
+@.@.@@@.@.`
+	want := "43"
+
+	d := Day04{}
+	got, err := d.Part2(input)
+	if err != nil {
+		t.Fatalf("parse returned err - %s", err.Error())
+	}
+
+	if got != want {
+		t.Errorf("got %s want %s", got, want)
+	}
+}

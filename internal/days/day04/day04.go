@@ -12,10 +12,9 @@ func parse(s string) ([]string, error) {
 }
 
 type Grid struct {
-	data   []string
-	rows   int
-	cols   int
-	starts [][2]int
+	data []string
+	rows int
+	cols int
 }
 
 func NewGrid(s []string) *Grid {
@@ -23,14 +22,6 @@ func NewGrid(s []string) *Grid {
 		data: s,
 		rows: len(s),
 		cols: len(s[0]),
-	}
-
-	for j := range len(s) {
-		for i := range len(s[0]) {
-			if s[j][i] == '@' {
-				g.starts = append(g.starts, [2]int{i, j})
-			}
-		}
 	}
 
 	return &g
@@ -60,6 +51,20 @@ func (g *Grid) Clear(x, y int) error {
 	g.data[y] = b.String()
 
 	return nil
+}
+
+func (g Grid) GetRolls() [][2]int {
+	rolls := [][2]int{}
+
+	for j := range len(g.data) {
+		for i := range len(g.data[0]) {
+			if g.data[j][i] == '@' {
+				rolls = append(rolls, [2]int{i, j})
+			}
+		}
+	}
+
+	return rolls
 }
 
 func (g Grid) Adjacent(x, y int) ([]byte, error) {
@@ -97,7 +102,7 @@ func (d Day04) Part1(input string) (string, error) {
 
 	g := NewGrid(i)
 	var total int
-	for _, s := range g.starts {
+	for _, s := range g.GetRolls() {
 		adjs, err := g.Adjacent(s[0], s[1])
 		if err != nil {
 			return "", err
@@ -121,7 +126,7 @@ func (d Day04) Part2(input string) (string, error) {
 	var total int
 	for {
 		var roundTotal int
-		for _, s := range g.starts {
+		for _, s := range g.GetRolls() {
 			adjs, err := g.Adjacent(s[0], s[1])
 			if err != nil {
 				return "", err
@@ -133,10 +138,10 @@ func (d Day04) Part2(input string) (string, error) {
 			}
 		}
 
-		fmt.Println(roundTotal)
 		if roundTotal == 0 {
 			break
 		}
+		total += roundTotal
 	}
 
 	return fmt.Sprintf("%d", total), nil
