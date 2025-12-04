@@ -69,7 +69,12 @@ func HandleScaffold(day int) error {
 		}
 	}
 
-	txtFilename := filepath.Join("internal", "days", "inputs", fmt.Sprintf("%02d.txt", day))
-	_, err := os.OpenFile(txtFilename, os.O_CREATE, 0o777)
-	return err
+	txtFilename := filepath.Join("inputs", fmt.Sprintf("%02d.txt", day))
+	f, err := os.OpenFile(txtFilename, os.O_CREATE, 0o777)
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+
+	return nil
 }
