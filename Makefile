@@ -27,6 +27,9 @@ watch:
 			$(BIN) run $$DAY; \
 		fi' sh {}
 
+bench:
+	@go test -v -bench=. ./internal/bench/...
+
 test:
 	@go test -v ./internal/...
 

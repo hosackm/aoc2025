@@ -7,6 +7,11 @@ import (
 
 type Day04 struct{}
 
+type point struct {
+	x int
+	y int
+}
+
 func parse(s string) ([]string, error) {
 	return strings.Split(s, "\n"), nil
 }
@@ -53,13 +58,14 @@ func (g *Grid) Clear(x, y int) error {
 	return nil
 }
 
-func (g Grid) GetRolls() [][2]int {
-	rolls := [][2]int{}
+// Returns the x/y points that have paper rolls on them.
+func (g Grid) GetRolls() []point {
+	rolls := []point{}
 
 	for j := range len(g.data) {
 		for i := range len(g.data[0]) {
 			if g.data[j][i] == '@' {
-				rolls = append(rolls, [2]int{i, j})
+				rolls = append(rolls, point{i, j})
 			}
 		}
 	}
@@ -103,7 +109,7 @@ func (d Day04) Part1(input string) (string, error) {
 	g := NewGrid(i)
 	var total int
 	for _, s := range g.GetRolls() {
-		adjs, err := g.Adjacent(s[0], s[1])
+		adjs, err := g.Adjacent(s.x, s.y)
 		if err != nil {
 			return "", err
 		}
@@ -127,13 +133,13 @@ func (d Day04) Part2(input string) (string, error) {
 	for {
 		var roundTotal int
 		for _, s := range g.GetRolls() {
-			adjs, err := g.Adjacent(s[0], s[1])
+			adjs, err := g.Adjacent(s.x, s.y)
 			if err != nil {
 				return "", err
 			}
 
 			if strings.Count(string(adjs), "@") < 4 {
-				g.Clear(s[0], s[1])
+				g.Clear(s.x, s.y)
 				roundTotal++
 			}
 		}
