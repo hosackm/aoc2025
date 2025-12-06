@@ -10,6 +10,7 @@ import (
 	"github.com/hosackm/aoc2025/internal/days/day03"
 	"github.com/hosackm/aoc2025/internal/days/day04"
 	"github.com/hosackm/aoc2025/internal/days/day05"
+	"github.com/hosackm/aoc2025/internal/days/day06"
 	"github.com/hosackm/aoc2025/internal/runner"
 )
 
@@ -24,6 +25,7 @@ func BenchmarkPackageRunners(b *testing.B) {
 		{"Day03", &day03.Day03{}, "../../inputs/03.txt"},
 		{"Day04", &day04.Day04{}, "../../inputs/04.txt"},
 		{"Day05", &day05.Day05{}, "../../inputs/05.txt"},
+		{"Day06", &day06.Day06{}, "../../inputs/06.txt"},
 	}
 
 	input := "some input data"
