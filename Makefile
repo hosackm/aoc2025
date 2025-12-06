@@ -12,9 +12,6 @@ build:
 	@mkdir -p $(BUILD_DIR)
 	@go build -o $(BIN) $(CMD_PATH)
 
-run:
-	@go run $(CMD_PATH)
-
 watch:
 	@echo "Watching internal/days for changes..."
 	@reflex -r 'internal/days/day[0-9]{2}/.*\.go' -- sh -c '\
