@@ -13,6 +13,7 @@ import (
 	"github.com/hosackm/aoc2025/internal/days/day05"
 	"github.com/hosackm/aoc2025/internal/days/day06"
 	"github.com/hosackm/aoc2025/internal/days/day07"
+	"github.com/hosackm/aoc2025/internal/days/day09"
 	"github.com/hosackm/aoc2025/internal/runner"
 )
 
@@ -34,6 +35,7 @@ func HandleRun(day int) error {
 		5: day05.Day05{},
 		6: day06.Day06{},
 		7: day07.Day07{},
+		9: day09.Day09{},
 	}
 
 	for num, day := range dayImplementations {
